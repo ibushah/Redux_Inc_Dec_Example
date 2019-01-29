@@ -1,28 +1,48 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { connect } from 'react-redux'
+import { abhi } from './Redux/Action/action'
 
 class App extends Component {
+
+  up=()=>
+  {
+    this.props.increment();
+  }
+  down=()=>
+  {
+    this.props.decrement();
+  }
   render() {
+    console.log(this.props)
     return (
+    
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <h1>{this.props.num}</h1>
+        <button onClick={this.up}>INCR</button>
+        <button onClick={this.down}>DEC</button>
+
       </div>
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    num: state.reducer.num
+  }
+}
 
-export default App;
+const mapdispatchToProps = (dispatch) => {
+  return {
+    increment: () => dispatch({ type: "INCREMENT" }),
+    decrement: () => dispatch({ type: "DECCREMENT" })
+  }
+}
+
+export default connect(mapStateToProps, mapdispatchToProps)(App);
+
+
+
+
+
